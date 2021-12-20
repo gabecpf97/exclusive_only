@@ -11,7 +11,7 @@ const PostSchema = new Schema({
 });
 
 PostSchema.virtual('url').get(function() {
-    return `/user/${this.user}/${this.id}`;
+    return `/post/${this.id}`;
 });
 
 PostSchema.virtual('pretty_date').get(function() {

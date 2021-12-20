@@ -7,7 +7,6 @@ const UserSchema = new Schema({
     first_name: {type: String, required: true},
     last_name: {type: String, required: true},
     status: {type: String, required: true},
-    post: [{type: Schema.Types.ObjectId, ref: 'Post'}],
 });
 
 UserSchema.virtual('url').get(function() {

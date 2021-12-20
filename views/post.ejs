@@ -1,0 +1,9 @@
+<div class="post_detail">
+    <h1><%= post.title %></h1>
+    <% if (typeof(post.media) !== 'undefined') { %>
+        <img class="images" src="data:image/<%=post.media.content_type%>;base64,<%=post.media.data.toString('base64')%>">
+    <% } %>
+    <p><%= post.message %></p>
+    <p><%= post.pretty_date %></p>
+    <a href="<%=post.user.url%>"><%= post.user.username %></a>
+</div>
