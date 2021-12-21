@@ -8,10 +8,12 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
 const compression = require('compression');
 const helmet = require('helmet');
+const bcrypt = require('bcrypt');
 const dotenv = require('dotenv');
 dotenv.config();
 
 const indexRouter = require('./routes/index');
+const User = require('./models/user');
 
 const app = express();
 
@@ -56,6 +58,10 @@ app.use(session({ secret: 'cats', resave: false, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
+app.use(function(req, res, next) {
+  res.locals.currentUser = req.user;
+  next();
+});
 app.use(compression());
 app.use(helmet());
 app.use(logger('dev'));

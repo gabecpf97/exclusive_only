@@ -1,0 +1,34 @@
+<div class="sign_up">
+    <h1>Welcome to Members Only</h1>
+    <form method="POST" action="">
+        <div class="getUsername field">
+            <label for="username">Username: </label>
+            <input name="username" placeholder="username" type="text"
+                value="<%= typeof(user) === 'undefined' ? '' : user.username %>">
+        </div>
+        <div class="getFirstName field">
+            <label for="first_name">First Name:</label>
+            <input name="first_name" placeholder="first name" type="text"
+                value="<%= typeof(user) === 'undefined' ? '' : user.first_name %>">
+        </div>
+        <div class="getLastName field">
+            <label for="last_name">Last Name: </label>
+            <input name="last_name" placeholder="last name" type="text"
+                value="<%= typeof(user) === 'undefined' ? '' : user.last_name %>">
+        </div>
+        <div class="getPassword field">
+            <label for="password">Password: </label>
+            <input name="password" type="password">
+        </div>
+        <input type="submit" value="Sign up">
+    </form>
+    <div class="errors">
+        <ul>
+            <% if (typeof(errors) !== 'undefined') { %> 
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>    
+                <% }) %>
+            <% } %>
+        </ul>
+    </div>
+</div>

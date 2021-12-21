@@ -1,3 +1,19 @@
-<div class="user">
-    
+<div class="user_detail">
+    <h2><%= user.full_name %></h2>
+    <p>User status: <%= user.status %></p>
+    <ul class="item_list user_post">
+        <% post_list.forEach(post => { %> 
+            <li class="item post">
+                <a href="<%= post.url %>">
+                    <h2><%= post.title %></h2>
+                    <p><%= post.message %></p>
+                    <% if (typeof(post.media) !== 'undefined') { %>
+                        <img class="preview" src="data:image/<%=post.media.content_type%>;base64,<%=post.media.data.toString('base64')%>">
+                    <% } %>
+                    <p><%= post.pretty_date %></p>
+                    <a href="<%=post.user.url%>"><%= post.user.username %></a>
+                </a>
+            </li>        
+        <% }) %>
+    </ul>    
 </div>

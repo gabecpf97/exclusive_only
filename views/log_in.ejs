@@ -1,0 +1,23 @@
+<div class="log_in">
+    <h1>Log in</h1>
+    <form method="POST" action="">
+        <div class="getLoginUsername field">
+            <label for="username">Username: </label>
+            <input name="username" placeholder="username" type="text">
+        </div>
+        <div class="getLoginPassword field">
+            <label for="password">Password: </label>
+            <input name="password" type="password">
+        </div>
+        <input type="submit" value="Log in">
+    </form>
+    <div class="errors">
+        <ul>
+            <% if (typeof(errors) !== 'undefined') { %> 
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>    
+                <% }) %>
+            <% } %>
+        </ul>
+    </div>
+</div>
