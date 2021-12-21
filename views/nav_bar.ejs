@@ -1,9 +1,16 @@
 <div class="nav_bar">
     <a href="/"><h2 class="logo">Members Only</h2></a>
-    <h1>Welcome <%= currentUser.username%></h1>
+    <% if (typeof(currentUser) !== 'undefined') { %> 
+        <h1>Welcome <%= currentUser.username%></h1>
+    <% } %>
     <ul>
-        <li><a href="/user/log_in">log in</a></li>
-        <li><a href="/user/create">Sign up</a></li>
-        <li><a href="/post/create">Create Post</a></li>
+        <% if (typeof(currentUser) !== 'undefined') { %> 
+            <li><a href="/post/create">Create Post</a></li>
+            <li><a href="/user/account">Account</a></li>
+            <li><a href="/user/log_out">Log out</a></li>
+        <% } else { %>
+            <li><a href="/user/log_in">log in</a></li>
+            <li><a href="/user/create">Sign up</a></li>
+        <% } %>
     </ul>
 </div>

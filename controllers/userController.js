@@ -49,13 +49,15 @@ exports.user_create_post = [
             });
         });
     }),
+    check('confirmPassword', "Please enter the same password").exists()
+    .custom((value, { req }) => value === req.body.password),
     (req, res, next) => {
         const errors = validationResult(req);
         const user = new User({ 
             username: req.body.username,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
-            status: 'online',
+            status: 'normal',
         });
         if (!errors.isEmpty()) {
             res.render('index', {title: 'Sign Up', page: './sign_up_form',
@@ -87,3 +89,93 @@ exports.user_login_post = passport.authenticate('local', {
     successRedirect: '/',
     failureRedirect: '/user/log_in',
 });
+
+exports.user_log_out = (req, res) => {
+    req.logOut();
+    res.redirect('/');
+};
+
+exports.user_account_get = (req, res, next) => {
+    if (res.locals.currentUser !== undefined) {
+        Post.find({user: res.locals.currentUser.id}).populate('media')
+        .populate('user').exec((err, thePosts) => {
+            if(err)
+            return next(err);
+            res.render('index', {title: 'Account', page: './account', 
+            content: {
+                posts: thePosts
+            }});
+        });
+    }
+};
+
+exports.user_delete_get = (req, res, next) => {
+    res.render('index', {title: 'Delete User', page: './user_delete', content: {}});
+}
+
+exports.user_delete_post = (req, res, next) => {
+    User.findById(res.locals.currentUser.id).exec((err, theUser) => {
+        if (err)
+            return next(err);
+        req.logOut();
+        User.findByIdAndRemove(res.locals.currentUser.id, (err) => {
+            if (err)
+                return next(err);
+            res.redirect('/');
+        });
+    });
+}
+
+exports.user_update_get = (req, res, next) => {
+    res.render('index', {title: 'Edit profile', page: './acount_update', content: {}});
+}
+
+exports.user_update_post = [
+    body('username', 'Name must be longer than 4 letter.').trim().isLength({min: 4}).escape(),
+    body('first_name', "First name must not be empty").trim().isLength({min: 1}).escape(),
+    body('last_name', "Last name must not be empty").trim().isLength({min: 1}).escape(),
+    check('password').custom(async (value) => {
+        return new Promise((resolve, reject) => {
+            User.findById(res.locals.currentUser.id).exec((err, theUser) => {
+                if (err)
+                    return next(err);
+                if (theUser === null) {
+                    const err = new Error('No such user');
+                    err.status = 404;
+                    return next(err);
+                }
+                bcrypt.compare(res.locals.currentUser.password, theUser.password, (err, res) => {
+                    if (res)
+                        resolve(true);
+                    else
+                        reject(new Error('Please enter correct password'));
+                });               
+            });
+        });
+    }),
+    body('newPassword', 'Password must be longer than 6 letter').trim().isLength({min: 6}).escape(),
+    (req, res, next) => {
+        const user = new User({
+            username: req.body.username,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            status: req.body.status,
+            _id: res.locals.currentUser.id
+        });
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.render('index', {title: 'Edit profile', page: './acount_update', 
+                                content: { 
+                                    user: user,
+                                    errors: errors.array(),
+                                }});
+            return;
+        } else {
+            User.findByIdAndUpdate(res.locals.currentUser.id, user, {}, (err, theUser) => {
+                if (err)
+                    return next(err);
+                res.redirect('/account');
+            });
+        }
+    }
+]

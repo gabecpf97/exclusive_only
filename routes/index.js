@@ -26,13 +26,15 @@ router.get('/post/:id', postController.post_detail);
 // router.post('/post/:id/update', postController.post_update_post);
 
 // /* GET and POST for Users */
+router.get('/user/account', userController.user_account_get);
 router.get('/user/create', userController.user_create_get);
 router.post('/user/create', userController.user_create_post);
 router.get('/user/log_in', userController.user_login_get);
 router.post('/user/log_in', userController.user_login_post);
+router.get('/user/log_out', userController.user_log_out);
 router.get('/user/:id', userController.user_detail);
-// router.get('/user/:id/delete', userController.user_delete.get);
-// router.post('/user/:id/delete', userController.user_delete.post);
+router.get('/user/:id/delete', userController.user_delete_get);
+router.post('/user/:id/delete', userController.user_delete_post);
 // router.get('/user/:id/update', userController.user_update_get);
 // router.postget('/user/:id/update', userController.user_update_post);
 

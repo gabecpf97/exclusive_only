@@ -1,0 +1,29 @@
+<div class="account_update">
+    <h1>Update Account</h1>
+    <form method="POST" action="">
+        <div class="getUsername field">
+            <label for="username">Username: </label>
+            <input name="username" placeholder="username" type="text"
+                value="<%= currentUser.username %>">
+        </div>
+        <div class="getFirstName field">
+            <label for="first_name">First Name:</label>
+            <input name="first_name" placeholder="first name" type="text"
+                value="<%= currentUser.first_name %>">
+        </div>
+        <div class="getLastName field">
+            <label for="last_name">Last Name: </label>
+            <input name="last_name" placeholder="last name" type="text"
+                value="<%= currentUser.last_name %>">
+            </div>
+            <div class="getPassword field">
+                <label for="password">Current Password: </label>
+                <input name="password" type="text">
+            </div>
+            <div class="getNewPassword field">
+                <label for="newPassword">New Password: </label>
+                <input name="newPassword" type="text">
+        </div>
+        <input type="submit" value="Sign up">
+    </form>
+</div>
