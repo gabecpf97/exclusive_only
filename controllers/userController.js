@@ -127,24 +127,57 @@ exports.user_delete_post = (req, res, next) => {
 }
 
 exports.user_update_get = (req, res, next) => {
-    res.render('index', {title: 'Edit profile', page: './acount_update', content: {}});
+    res.render('index', {title: 'Edit profile', page: './account_update', content: {}});
 }
 
 exports.user_update_post = [
     body('username', 'Name must be longer than 4 letter.').trim().isLength({min: 4}).escape(),
     body('first_name', "First name must not be empty").trim().isLength({min: 1}).escape(),
     body('last_name', "Last name must not be empty").trim().isLength({min: 1}).escape(),
-    check('password').custom(async (value) => {
-        return new Promise((resolve, reject) => {
-            User.findById(res.locals.currentUser.id).exec((err, theUser) => {
+    (req, res, next) => {
+        const user = new User({
+            username: req.body.username,
+            password: res.locals.currentUser.id,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            status: res.locals.currentUser.status,
+            _id: res.locals.currentUser.id
+        });
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.render('index', {title: 'Edit profile', page: './account_update', 
+                                content: { 
+                                    user: user,
+                                    errors: errors.array(),
+                                }});
+            return;
+        } else {
+            User.findByIdAndUpdate(res.locals.currentUser.id, user, {}, (err, theUser) => {
                 if (err)
                     return next(err);
+                res.redirect('/user/account');
+            });
+        }
+    }
+]
+
+exports.user_change_password_get = (req, res, next) => {
+    res.render('index', {title: 'Change password', page: './update_password',
+                        content: {}});
+}
+
+exports.user_change_password_post = [
+    check('password').custom(async (value, { req }) => {
+        return new Promise((resolve, reject) => {
+            User.findById(req.params.id).exec((err, theUser) => {
+                if (err)
+                return next(err);
                 if (theUser === null) {
                     const err = new Error('No such user');
                     err.status = 404;
                     return next(err);
                 }
-                bcrypt.compare(res.locals.currentUser.password, theUser.password, (err, res) => {
+                bcrypt.compare(value, theUser.password, (err, res) => {
                     if (res)
                         resolve(true);
                     else
@@ -156,25 +189,27 @@ exports.user_update_post = [
     body('newPassword', 'Password must be longer than 6 letter').trim().isLength({min: 6}).escape(),
     (req, res, next) => {
         const user = new User({
-            username: req.body.username,
-            first_name: req.body.first_name,
-            last_name: req.body.last_name,
-            status: req.body.status,
+            username: res.locals.currentUser.username,
+            first_name: res.locals.currentUser.first_name,
+            last_name: res.locals.currentUser.last_name,
+            status: res.locals.currentUser.status,
             _id: res.locals.currentUser.id
-        });
+        })
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
-            res.render('index', {title: 'Edit profile', page: './acount_update', 
-                                content: { 
-                                    user: user,
-                                    errors: errors.array(),
-                                }});
+            res.render('index', {title: 'Change password', page: './update_password',
+            content: {errors: errors.array()}});
             return;
         } else {
-            User.findByIdAndUpdate(res.locals.currentUser.id, user, {}, (err, theUser) => {
+            bcrypt.hash(req.body.newPassword, 10, (err, hashedPassword) => {
                 if (err)
                     return next(err);
-                res.redirect('/account');
+                user.password = hashedPassword;
+                User.findByIdAndUpdate(res.locals.currentUser.id, user, {}, (err, theUser) => {
+                    if (err)
+                        return next(err);
+                    res.redirect('/user/account');
+                });
             });
         }
     }

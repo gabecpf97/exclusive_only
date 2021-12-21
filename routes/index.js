@@ -33,9 +33,11 @@ router.get('/user/log_in', userController.user_login_get);
 router.post('/user/log_in', userController.user_login_post);
 router.get('/user/log_out', userController.user_log_out);
 router.get('/user/:id', userController.user_detail);
+router.get('/user/:id/change_password', userController.user_change_password_get);
+router.post('/user/:id/change_password', userController.user_change_password_post);
 router.get('/user/:id/delete', userController.user_delete_get);
 router.post('/user/:id/delete', userController.user_delete_post);
-// router.get('/user/:id/update', userController.user_update_get);
-// router.postget('/user/:id/update', userController.user_update_post);
+router.get('/user/:id/update', userController.user_update_get);
+router.post('/user/:id/update', userController.user_update_post);
 
 module.exports = router;

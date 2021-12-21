@@ -4,26 +4,28 @@
         <div class="getUsername field">
             <label for="username">Username: </label>
             <input name="username" placeholder="username" type="text"
-                value="<%= currentUser.username %>">
+                value="<%= (typeof(user) === 'undefined') ? currentUser.username : user.username %>">
         </div>
         <div class="getFirstName field">
             <label for="first_name">First Name:</label>
             <input name="first_name" placeholder="first name" type="text"
-                value="<%= currentUser.first_name %>">
+                value="<%= (typeof(user) === 'undefined') ? currentUser.first_name: user.first_name %>">
         </div>
         <div class="getLastName field">
             <label for="last_name">Last Name: </label>
             <input name="last_name" placeholder="last name" type="text"
-                value="<%= currentUser.last_name %>">
-            </div>
-            <div class="getPassword field">
-                <label for="password">Current Password: </label>
-                <input name="password" type="text">
-            </div>
-            <div class="getNewPassword field">
-                <label for="newPassword">New Password: </label>
-                <input name="newPassword" type="text">
+                value="<%= (typeof(user) === 'undefined') ? currentUser.last_name : user.last_name %>">
         </div>
-        <input type="submit" value="Sign up">
+        <input type="submit" value="update">
     </form>
+    <div class="errors">
+        <ul>
+            <% if (typeof(errors) !== 'undefined') { %> 
+                <% errors.forEach(error => { %>
+                    <li><%= error.msg %></li>    
+                <% }) %>
+            <% } %>
+        </ul>
+    </div>
+
 </div>

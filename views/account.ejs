@@ -2,6 +2,7 @@
     <h1><%= `Welcome ${currentUser.full_name}` %></h1>
     <div class="edit_info">
         <a href="<%= `${currentUser.url}/update` %>">Edit account</a>
+        <a href="<%=  `${currentUser.url}/change_password` %>">Change password</a>
         <a href="<%= `${currentUser.url}/delete` %>">Delete account</a>
     </div>
     <%- include('./user', {user: currentUser, post_list: posts}); %>
