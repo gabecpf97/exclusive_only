@@ -19,6 +19,8 @@ router.post('/post/:id/update', upload.single('media'), postController.post_upda
 
 // /* GET and POST for Users */
 router.get('/user/account', userController.user_account_get);
+router.get('/user/account/status_update', userController.user_status_update_get);
+router.post('/user/account/status_update', userController.user_status_update_post);
 router.get('/user/create', userController.user_create_get);
 router.post('/user/create', userController.user_create_post);
 router.get('/user/log_in', userController.user_login_get);

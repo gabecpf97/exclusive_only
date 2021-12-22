@@ -142,10 +142,10 @@ exports.post_update_post = [
         const errors = validationResult(req);
         const post = new Post({
             date: req.body.date,
-            title: req.body.post_titel,
+            title: req.body.post_title,
             message: req.body.message,
             media: req.body.media,
-            user: res.locals.currentUser.id,
+            user: req.params.id,
             _id: req.params.id
         });
         if (!errors.isEmpty()) {

@@ -8,7 +8,8 @@ const passport = require('passport');
 exports.user_detail = (req, res, next) => {
     async.parallel({
         posts: (callback) => {
-            Post.find({user: req.params.id}).populate('media').populate('user')
+            Post.find({user: req.params.id}).sort({date: -1}).
+            populate('media').populate('user')
             .exec(callback);
         },
         user: (callback) => {
@@ -57,6 +58,7 @@ exports.user_create_post = [
             username: req.body.username,
             first_name: req.body.first_name,
             last_name: req.body.last_name,
+            admin: false,
             status: 'normal',
         });
         if (!errors.isEmpty()) {
@@ -141,6 +143,7 @@ exports.user_update_post = [
             first_name: req.body.first_name,
             last_name: req.body.last_name,
             status: res.locals.currentUser.status,
+            admin: res.locals.currentUser.admin,
             _id: res.locals.currentUser.id
         });
         const errors = validationResult(req);
@@ -193,6 +196,7 @@ exports.user_change_password_post = [
             first_name: res.locals.currentUser.first_name,
             last_name: res.locals.currentUser.last_name,
             status: res.locals.currentUser.status,
+            admin: res.locals.currentUser.admin,
             _id: res.locals.currentUser.id
         })
         const errors = validationResult(req);
@@ -210,6 +214,51 @@ exports.user_change_password_post = [
                         return next(err);
                     res.redirect('/user/account');
                 });
+            });
+        }
+    }
+]
+
+exports.user_status_update_get = (req, res, next) => {
+    res.render('index', {title: 'Update status', page: './update_status',
+                        content: {}});
+}
+
+exports.user_status_update_post = [
+    body('code').trim().escape(),
+    check('code', 'No such code').custom((value) => {
+        if (value !== 'wannabeVIP' && value !== 'iamAdmin123')
+            return false;
+        else
+            return true; 
+    }),
+    (req, res, next) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            res.render('index', {title: 'Update status', page: './update_status',
+                                content: { errors: errors.array() }});
+            return;
+        } else {
+            User.findById(res.locals.currentUser.id).exec((err, theUser) => {
+                if (err)
+                    return next(err);
+                if (theUser === null) {
+                    const err = new Error('No such user');
+                    err.status = 404;
+                    return next(err);
+                } else {
+                    if (req.body.code === 'wannabeVIP') {
+                        theUser.status = 'VIP';
+                    } else {
+                        theUser.status = 'VIP';
+                        theUser.admin = true;
+                    }
+                    User.findByIdAndUpdate(theUser.id, theUser, {}, (err, newUser) => {
+                        if (err)
+                            return next(err);
+                        res.redirect('/user/account');    
+                    });
+                }
             });
         }
     }

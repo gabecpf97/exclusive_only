@@ -7,7 +7,7 @@
     <p><%= post.pretty_date %></p>
     <a href="<%=post.user.url%>"><%= post.user.username %></a>
     <% if (typeof(currentUser) !== 'undefined') { %>
-        <% if (currentUser.id === post.user.id) { %> 
+        <% if (currentUser.id === post.user.id || currentUser.admin) { %> 
             <a href="<%= `${post.url}/update` %>">Update Post</a>
             <a href="<%= `${post.url}/delete` %>">Delete Post</a>
         <% } %>

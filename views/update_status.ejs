@@ -1,0 +1,11 @@
+<div class="update_status">
+    <h1>Update status</h1>
+    <form method="POST" action="">
+        <label for="code">Enter code: </label>
+        <input name="code" type="text" required=true>
+        <input type="submit" value="Submit">
+    </form>
+    <% if (typeof(errors) !== 'undefined') { %> 
+        <%- include('./errors', {errors: errors}) %>
+    <% } %>
+</div>
