@@ -16,7 +16,7 @@
             <input name="last_name" placeholder="last name" type="text"
                 value="<%= (typeof(user) === 'undefined') ? currentUser.last_name : user.last_name %>">
         </div>
-        <input type="submit" value="update">
+        <input class="submit" type="submit" value="update">
     </form>
     <% if (typeof(errors) !== 'undefined') { %> 
         <%- include('./errors', {errors: errors}) %>

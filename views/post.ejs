@@ -1,15 +1,25 @@
 <div class="post_detail">
     <h1><%= post.title %></h1>
     <% if (typeof(post.media) !== 'undefined') { %>
-        <img class="images" src="data:image/<%=post.media.content_type%>;base64,<%=post.media.data.toString('base64')%>">
+        <div class="frame">
+            <img class="images" src="data:image/<%=post.media.content_type%>;base64,<%=post.media.data.toString('base64')%>">
+        </div>
     <% } %>
-    <p><%= post.message %></p>
-    <p><%= post.pretty_date %></p>
-    <a href="<%=post.user.url%>"><%= post.user.username %></a>
-    <% if (typeof(currentUser) !== 'undefined') { %>
-        <% if (currentUser.id === post.user.id || currentUser.admin) { %> 
-            <a href="<%= `${post.url}/update` %>">Update Post</a>
-            <a href="<%= `${post.url}/delete` %>">Delete Post</a>
+    <div class="post_info">
+        <% if (typeof(currentUser) !== 'undefined') { %>
+            <a class="post_username" href="<%=post.user.url%>">
+                <h1><%= post.user.username %></h1>
+            </a>
         <% } %>
-    <% } %>
+        <h2><%= post.message %></h2>
+        <% if (typeof(currentUser) !== 'undefined') { %>
+            <% if (currentUser.id === post.user.id || currentUser.admin) { %> 
+                <p><%= post.pretty_date %></p>
+                <div class="post_control">
+                    <a href="<%= `${post.url}/update` %>">Update Post</a>
+                    <a href="<%= `${post.url}/delete` %>">Delete Post</a>
+                </div>
+            <% } %>
+        <% } %>
+    </div>
 </div>

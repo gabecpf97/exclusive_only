@@ -1,5 +1,4 @@
 <div class="user_detail">
-    <h2><%= user.full_name %></h2>
-    <p>User status: <%= user.status %></p>
+    <p>Your tier: <%= user.status %></p>
     <%- include('./post_list', {post_list: post_list}); %>
 </div>

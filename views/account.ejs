@@ -1,12 +1,12 @@
 <div class="account">
     <h1><%= `Welcome ${currentUser.full_name}` %></h1>
-    <h2><%= (currentUser.admin) ? 'Admin' : '' %></h2>
-    <h2><%= `Your tier is ${currentUser.status}` %></h2>
+    <h2 class="tier"><%= currentUser.status %> tier account</h2>
+    <h2 class="admin"><%= (currentUser.admin) ? 'You are Admin' : '' %></h2>
     <div class="edit_info">
         <a href="<%= `${currentUser.url}/update` %>">Edit account</a>
         <a href="/user/account/status_update">Update tier</a>
         <a href="<%=  `${currentUser.url}/change_password` %>">Change password</a>
         <a href="<%= `${currentUser.url}/delete` %>">Delete account</a>
     </div>
-    <%- include('./user', {user: currentUser, post_list: posts}); %>
+    <%- include('./post_list', { post_list: posts}); %>
 </div>

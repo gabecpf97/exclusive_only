@@ -1,6 +1,6 @@
 <div class="post_delete">
     <h1>Delete Post</h1>
-    <h2>Really delete this post?</h2>
+    <h2 class="confirmation">Really delete this post?</h2>
     <div class="post post_preview">
         <h2><%= post.title %></h2>
         <p><%= post.message %></p>
@@ -10,6 +10,6 @@
     </div>
     <form method="POST" action="">
         <input type="hidden" name="postid" value="<%= post.id %>">
-        <input type="submit" value="Delete">
+        <input class="submit" type="submit" value="Delete">
     </form>
 </div>

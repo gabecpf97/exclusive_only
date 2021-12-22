@@ -3,11 +3,13 @@
         <% post_list.forEach(post => { %>
             <li class="post">
                 <a href="<%= post.url %>">
+                    <% if (typeof(post.media) !== 'undefined') { %>
+                        <div class="frame">
+                            <img class="preview" src="data:image/<%=post.media.content_type%>;base64,<%=post.media.data.toString('base64')%>">
+                        </div>
+                    <% } %>
                     <h2><%= post.title %></h2>
                     <p><%= post.message %></p>
-                    <% if (typeof(post.media) !== 'undefined') { %>
-                        <img class="preview" src="data:image/<%=post.media.content_type%>;base64,<%=post.media.data.toString('base64')%>">
-                    <% } %>
                     <% if (typeof(currentUser) !== 'undefined') { %>
                         <p><%= post.pretty_date %></p>
                         <a href="<%=post.user.url%>"><%= post.user.username %></a>

@@ -1,4 +1,8 @@
 <div class="home">
-    <h1><%= title %></h1>
+    <% if (typeof(currentUser) !== 'undefined') { %> 
+        <h1>Welcome <%= currentUser.username%></h1>
+    <% } else { %>
+        <h1><%= title %> to Member Only</h1>
+    <% } %>
     <%- include('./post_list', {post_list: post_list}); %>
 </div>

@@ -1,20 +1,218 @@
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding: 0px;
+  margin: 0px;
+  background: #435656;
 }
 
 a {
-  color: #00B7FF;
+  color: #c1c1c1;
+  text-decoration: none;
+}
+
+li {
+  list-style: none;
+}
+
+h1 {
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pages li,
+.post {
+  border: slateblue solid;
+  border-radius: 10px;
+  background: #534c81;
+}
+
+/* nav bar */
+.nav_bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+}
+
+.logo {
+  flex: 1;
+}
+
+.pages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.pages li {
+  padding: 10px;
+}
+
+/* post list */
+.posts ul {
+  padding-inline-start: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
 .post {
-  border: slateblue solid;
+  width: 80vw;
+  max-width: 900px;
+  padding: 5px;
 }
 
-.images {
-  width: 90vw;
+.post h2,
+.post p,
+.post a {
+  color: #d3d3d3;
 }
 
 .preview {
-  width: 200px;
+  max-width: 100%;
+  border-radius: 10px;
+  max-height: 60vh;
+}
+
+/* post detail */
+.post_detail, 
+.frame {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.post_detail {
+  flex-direction: column;
+  border-radius: 10px;
+  background: #534c81;
+  width: 90vw;
+  max-width: 1000px;
+  padding: 20px;
+}
+
+.images {
+  width: 80vw;
+  max-width: 900px;
+  border-radius: 10px;
+}
+
+.post_info {
+  background: slateblue;
+  width: 80vw;
+  max-width: 900px;
+  margin-top: 10px;
+  border-radius: 10px;
+}
+
+.post_info h2,
+.post_info p,
+.post_info a {
+  padding: 0px 10px;
+  color: aliceblue;
+  margin-top: 0px;
+}
+
+.post_control {
+  padding: 10px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.post_control a,
+.edit_info a {
+  background: #443797;
+  border-radius: 10px;
+  border: #8d84c9 solid;
+  padding: 10px;
+}
+
+.post_username h1{
+  text-align: left;
+  text-decoration: underline;
+  font-size: 16px;
+  color: #b9e8ff;
+  padding: 10px;
+  margin: 0px;
+}
+
+/* form */
+.sign_up,
+.log_in,
+.post_form,
+.account_update,
+.update_status,
+.update_password,
+.user_delete,
+.post_delete {
+  border-radius: 10px;
+  background: slateblue;
+  padding: 10px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80vw;
+  max-width: 900px;
+}
+
+.field {
+  display: grid;
+  grid-template-columns: 150px 40vw;
+  color: #fff5f5;
+}
+
+.submit {
+  margin-top: 10px;
+  font-size: 18px;
+  border-radius: 10px;
+  padding: 5px;
+  background: #bfb6f7;
+}
+
+/* errors */
+.errors {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.errors ul {
+  background: rgb(202 189 213);
+  padding-inline-start: 0px;
+  padding: 10px;
+  border-radius: 10px;
+  color: #641a28;
+}
+
+/* account */
+.edit_info {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.tier,
+.admin{
+  text-align: center;
+  color: #79d7d7;
+}
+
+/* delete */
+.confirmation {
+  text-align: center;
 }
