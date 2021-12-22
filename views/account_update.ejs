@@ -18,14 +18,7 @@
         </div>
         <input type="submit" value="update">
     </form>
-    <div class="errors">
-        <ul>
-            <% if (typeof(errors) !== 'undefined') { %> 
-                <% errors.forEach(error => { %>
-                    <li><%= error.msg %></li>    
-                <% }) %>
-            <% } %>
-        </ul>
-    </div>
-
+    <% if (typeof(errors) !== 'undefined') { %> 
+        <%- include('./errors', {errors: errors}) %>
+    <% } %>
 </div>
